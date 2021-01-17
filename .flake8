@@ -1,6 +1,0 @@
-[flake8]
-exlcude = 
-    migrations,
-    venv,
-    settings.py
-max-complexity = 10
