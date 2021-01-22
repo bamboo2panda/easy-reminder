@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                         PermissionsMixin
+from timezone_field import TimeZoneField
 
 
 class UserManager(BaseUserManager):
@@ -9,6 +10,8 @@ class UserManager(BaseUserManager):
         """Creates and saves new user"""
         if not email:
             raise ValueError('User must have an email adress.')
+        if 'time_zone' in extra_fields and not extra_fields['time_zone']:
+            extra_fields.pop('time_zone', None)
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -20,6 +23,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead of username"""
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
+    time_zone = TimeZoneField(default='Europe/Moscow',
+                              choices_display='WITH_GMT_OFFSET')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

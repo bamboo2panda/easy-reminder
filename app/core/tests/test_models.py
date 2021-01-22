@@ -1,5 +1,20 @@
+import pytz
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+
+
+def get_test_user(email='test@email.com',
+                  password='testpassword',
+                  name='Test Name',
+                  time_zone='Europe/Moscow'):
+    user = get_user_model().objects.create_user(
+        email=email,
+        password=password,
+        name=name,
+        time_zone=time_zone
+    )
+
+    return user
 
 
 class ModelTests(TestCase):
@@ -14,3 +29,24 @@ class ModelTests(TestCase):
         )
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
+
+    def test_new_user_email_normalized(self):
+        """Test the email of a new user is normalized"""
+        email = 'test@EMAIL.com'
+        user = get_test_user(email=email)
+
+        self.assertEquals(user.email, email.lower())
+
+    def test_new_user_time_zone_field_is_required(self):
+        """Test time zome field is required"""
+        time_zone = 'Turkey'
+        user = get_test_user(time_zone=time_zone)
+
+        self.assertEquals(user.time_zone, time_zone)
+
+    def test_new_user_invalid_time_zone_field(self):
+        """Test if new user has invalid time zone field format"""
+        time_zone = ''
+        user = get_test_user(time_zone=time_zone)
+
+        self.assertEquals(user.time_zone, pytz.timezone('Europe/Moscow'))
