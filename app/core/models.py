@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                         PermissionsMixin
 from timezone_field import TimeZoneField
@@ -30,3 +31,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
+
+class Event(models.Model):
+    """Event object"""
+    name = models.CharField(max_length=255, null=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True
+    )
+    date_time = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return self.name
+    
+
