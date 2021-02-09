@@ -60,7 +60,7 @@ class ModelTests(TestCase):
         event = models.Event.objects.create(
             user = current_user,
             name = 'Jain`s birthday party',
-            date_time = datetime(2021, 2, 1, 14, 0, 0, 0, pytz.timezone(current_user.time_zone ))
+            date_time = datetime(2021, 2, 1, 14, 0, 0, 0, pytz.timezone(current_user.time_zone))
         )
 
         self.assertEquals(str(event), event.name)
