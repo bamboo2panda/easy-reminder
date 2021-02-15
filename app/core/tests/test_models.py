@@ -54,15 +54,26 @@ class ModelTests(TestCase):
 
         self.assertEquals(user.time_zone, pytz.timezone('Europe/Moscow'))
 
+    def test_create_new_superuser(self):
+        """Test creating new superuser"""
+        user = get_user_model().objects.create_superuser(
+            'test@123.ru',
+            'test123'
+        )
+
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_staff)
+
     def test_new_event_str(self):
         """Test event string representation"""
         current_user = get_test_user()
         event = models.Event.objects.create(
-            user = current_user,
-            name = 'Jain`s birthday party',
-            date_time = datetime(2021, 2, 1, 14, 0, 0, 0, pytz.timezone(current_user.time_zone))
+            user=current_user,
+            name='Jain`s birthday party',
+            date_time=datetime(
+                               2021, 2, 1, 14, 0, 0, 0,
+                               pytz.timezone(current_user.time_zone)
+                               )
         )
 
         self.assertEquals(str(event), event.name)
-
-

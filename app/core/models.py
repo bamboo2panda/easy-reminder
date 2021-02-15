@@ -19,6 +19,15 @@ class UserManager(BaseUserManager):
 
         return user
 
+    def create_superuser(self, email, password):
+        """Creates and saves new superuser"""
+        user = self.create_user(email=email, password=password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+
+        return user
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead of username"""
@@ -32,6 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     USERNAME_FIELD = 'email'
 
+
 class Event(models.Model):
     """Event object"""
     name = models.CharField(max_length=255, null=True)
@@ -44,5 +54,3 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-    
-
