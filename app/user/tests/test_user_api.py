@@ -59,3 +59,79 @@ class PublicUserApiTests(TestCase):
         res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEquals(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_token_for_user(self):
+        """Test if token is created for the user"""
+        payload = {'email': 'test1@test1.ri',
+                   'password': 'testPassWord',
+                   'time_zone': 'Europe/Dublin'}
+        create_user(**payload)
+        res = self.client.post(TOKEN_URL, payload)
+
+        self.assertIn('token', res.data)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_create_token_invalid_credantials(self):
+        """Test that token is not created if invalid credantials are given"""
+        create_user(email='test@test1.com', password='testpass')
+        payload = {'email': 'test@test2.com', 'password': 'wrong'}
+        res = self.client.post(TOKEN_URL, payload)
+
+        self.assertNotIn('token', res.data)
+        self.assertEquals(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_token_no_user(self):
+        """Test that token is not created if user doesn`t exists"""
+        payload = {'email': 'test1@test.com', 'password': 'password'}
+        res = self.client.post(TOKEN_URL, payload)
+
+        self.assertNotIn('token', res.data)
+        self.assertEquals(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_token_missing_field(self):
+        """Test that token is not created with missing feld"""
+        payload = {'email': 'test1@test.com', 'password': ''}
+        res = self.client.post(TOKEN_URL, payload)
+
+        self.assertNotIn('token', res.data)
+        self.assertEquals(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class PrivateUserApiTests(TestCase):
+    """Test the user API (private)"""
+
+    def setUp(self):
+        self.user = create_user(
+            email='test@email.com',
+            password='testpass',
+            name='Test name'
+        )
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
+
+    def test_retrieve_profile_success(self):
+        """Test retrieving profile for logged user"""
+        res = self.client.get(ME_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, {
+            'name': self.user.name,
+            'email': self.user.email,
+            'time_zone': 'Europe/Moscow'
+        })
+
+    def test_post_not_allowed(self):
+        """Test thet POST is not allowed on the me url"""
+        res = self.client.post(ME_URL, {})
+
+        self.assertEquals(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_update_user_profile(self):
+        """Test updating user profile for authenticated user"""
+        payload = {'name': 'Test name', 'password': 'new_password'}
+        res = self.client.patch(ME_URL, payload)
+
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.name, payload['name'])
+        self.assertTrue(self.user.check_password(payload['password']))
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
