@@ -77,3 +77,22 @@ class ModelTests(TestCase):
         )
 
         self.assertEquals(str(event), event.name)
+
+    def test_new_event_time_zone(self):
+        """Test event time zone is correct"""
+        current_user = get_test_user()
+        cu_tz = pytz.timezone(current_user.time_zone)
+        event = models.Event.objects.create(
+            user=current_user,
+            name='New test Event',
+            date_time=cu_tz.localize(
+                            datetime(2021, 3, 3, 13, 25, 0, 0), is_dst=None
+                        ).astimezone(pytz.utc)
+        )
+
+        self.assertEqual(
+                         event.date_time,
+                         pytz.timezone('Europe/Moscow')
+                         .localize(datetime(2021, 3, 3, 13, 25, 0, 0))
+                        )
+        self.assertEquals(event.date_time.tzinfo, pytz.utc)
