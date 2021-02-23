@@ -29,7 +29,7 @@ class PublicEventsApiTest(TestCase):
 
 class PriveteApiTest(TestCase):
     """Test private events API"""
-    
+
     def setUp(self):
         self.client = APIClient()
         self.user = get_user_model().objects.create_user(
@@ -40,13 +40,15 @@ class PriveteApiTest(TestCase):
 
     def test_retrieve_events_list(self):
         """Test retrieving a list of events"""
-        Event.objects.create(user=self.user, 
-                             name='Birthday', 
-                             date_time=datetime.now().astimezone(self.user.time_zone))
+        Event.objects.create(user=self.user,
+                             name='Birthday',
+                             date_time=datetime.now()
+                             .astimezone(self.user.time_zone))
         Event.objects.create(user=self.user,
                              name='Next event',
-                             date_time=datetime.now().astimezone(self.user.time_zone))
-    
+                             date_time=datetime.now()
+                             .astimezone(self.user.time_zone))
+
         res = self.client.get(EVENTS_URL)
 
         events = Event.objects.all().order_by('-date_time')
@@ -60,12 +62,14 @@ class PriveteApiTest(TestCase):
             'new_user@testqwe1.ru',
             'tesst123123'
         )
-        Event.objects.create(user=user2, 
-                             name='New user event 2', 
-                             date_time=datetime.now().astimezone(user2.time_zone))
+        Event.objects.create(user=user2,
+                             name='New user event 2',
+                             date_time=datetime.now()
+                             .astimezone(user2.time_zone))
         event = Event.objects.create(user=self.user,
                                      name='First user event',
-                                     date_time=datetime.now().astimezone(self.user.time_zone))
+                                     date_time=datetime.now()
+                                     .astimezone(self.user.time_zone))
 
         res = self.client.get(EVENTS_URL)
 
