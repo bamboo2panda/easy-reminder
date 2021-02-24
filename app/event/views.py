@@ -7,7 +7,8 @@ from event import serializers
 
 
 class BaseEventViewSet(viewsets.GenericViewSet,
-                       mixins.ListModelMixin):
+                       mixins.ListModelMixin,
+                       mixins.CreateModelMixin):
     """Base viewset for user owned events"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -19,11 +20,15 @@ class BaseEventViewSet(viewsets.GenericViewSet,
         )
         queryset = self.queryset
         if assigned_only:
-            queryset = queryset.filter(recipe__isnull=False)
+            queryset = queryset.filter(event__isnull=False)
 
         return queryset.filter(
             user=self.request.user
         ).order_by('-date_time').distinct()
+
+    def perform_create(self, serializer):
+        """Create new object"""
+        serializer.save(user=self.request.user)
 
 
 class EventViewSet(BaseEventViewSet):

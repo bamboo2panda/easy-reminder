@@ -44,13 +44,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Event(models.Model):
     """Event object"""
-    name = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=255)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        null=True
+        on_delete=models.CASCADE
     )
-    date_time = models.DateTimeField(null=True)
+    date_time = models.DateTimeField()
 
     def __str__(self):
         return self.name

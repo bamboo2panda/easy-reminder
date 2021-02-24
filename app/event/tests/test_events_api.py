@@ -27,7 +27,7 @@ class PublicEventsApiTest(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class PriveteApiTest(TestCase):
+class PrivateApiTest(TestCase):
     """Test private events API"""
 
     def setUp(self):
@@ -76,3 +76,29 @@ class PriveteApiTest(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
         self.assertEqual(res.data[0]['name'], event.name)
+
+    def test_create_event_succuessful(self):
+        """Test create a new event"""
+        payload = {
+            'name': 'First event',
+            'date_time': datetime.now().astimezone(self.user.time_zone)
+        }
+        self.client.post(EVENTS_URL, payload)
+
+        exists = Event.objects.filter(
+            user=self.user,
+            name=payload['name'],
+            date_time=payload['date_time']
+        ).exists()
+        self.assertTrue(exists)
+
+    def test_create_event_invalid(self):
+        """Test creating invalid event fails"""
+        payload_name = {'name': ''}
+        res_name = self.client.post(EVENTS_URL, payload_name)
+
+        payload_date = {'name': 'Some good name', 'date_time': ''}
+        res_date = self.client.post(EVENTS_URL, payload_date)
+
+        self.assertEqual(res_name.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(res_date.status_code, status.HTTP_400_BAD_REQUEST)
