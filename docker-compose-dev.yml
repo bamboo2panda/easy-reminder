@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services: 
   nginx:
@@ -17,12 +17,29 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: /docker/backend/Dockerfile
-    # entrypoint: /docker/backend/wsgi-entrypoint.sh
+      dockerfile: ./docker/backend/Dockerfile
     volumes:
       - static_volume:/backend/static
-    expose:
-      - 8000
+    ports:
+      - 8000:8000
+    depends_on: 
+      - db
+    command: >
+      sh -c "python manage.py wait_for_db"
+    env_file:
+      - ./backend/.env
+    networks:
+      - djangonetwork
+  db:
+    image: postgres:13.1-alpine
+    env_file:
+      - ./backend/.env
+    networks:
+      - djangonetwork
 
 volumes:
   static_volume: {}
+
+networks:
+  djangonetwork:
+    driver: bridge

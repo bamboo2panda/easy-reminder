@@ -2,8 +2,6 @@
 # Build react app
 FROM node:15.12.0-alpine as build
 
-ENTRYPOINT /docker/backend/wsgi-entrypoint.sh
-
 WORKDIR /frontend
 COPY ./frontend/package.json ./
 COPY ./frontend/package-lock.json ./

@@ -14,8 +14,11 @@ RUN apk del .tmp-build-deps
 
 WORKDIR /backend
 COPY ./backend /backend
+COPY ./docker/backend/wsgi-entrypoint.sh /backend/wsgi-entrypoint.sh
+
+RUN chmod +x /backend/wsgi-entrypoint.sh
+ENTRYPOINT ["sh", "/backend/wsgi-entrypoint.sh"]
+
 
 RUN adduser -D user
 USER user
-RUN echo 'ls'
-RUN ls

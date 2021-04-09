@@ -1,11 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
+import EventService from '../../services/eventService';
 
 function App() {
+  let eventService = new EventService();
+
+  console.log(eventService.getEventsList());
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
