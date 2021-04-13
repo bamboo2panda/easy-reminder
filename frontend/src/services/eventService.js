@@ -1,19 +1,18 @@
 export default class EventService {
-   
-    constructor(){
-        this._apiBase = 'http://localhost:8000/api/event/events';
+    constructor(token){
+        this.token = token;
+        this._apiBase = 'http://localhost:8000/api';
     }
+    
+
 
     getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`,{
             method: 'GET',
             crossDomain: true,
             headers: {
-                'Authorization': 'Token 2f461b2833caa6acf4a659eb8b342eec94de2269'
+                'Authorization': `Token ${this.token}`
             }});
-
-        
-        
         if (!res.ok){
             throw new Error(`Could not fetch ${url}, status ${res.status}`);
         }
@@ -21,8 +20,8 @@ export default class EventService {
         return await res.json();
     };
 
-    getEventsList = async () => {
-        const res = await this.getResource(`/`);
+    getEventsList = async (token) => {
+        const res = await this.getResource(`/event/events/`);
         return res.map(this._transformEvent);
     };
 

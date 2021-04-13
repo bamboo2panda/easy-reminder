@@ -1,26 +1,17 @@
 import './App.css';
-import EventService from '../../services/eventService';
+
+import React, {useState} from 'react';
+import Auth from '../../components/auth';
+import EventList from '../../components/eventList';
+
 
 function App() {
-  let eventService = new EventService();
-
-  console.log(eventService.getEventsList());
+  const [token, updateToken] = useState();
+  console.log(token);
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Auth token={token} updateToken={updateToken}>
+      <EventList token={token}/>
+    </Auth>
   );
 }
 
