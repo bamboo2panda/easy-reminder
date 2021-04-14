@@ -3,8 +3,6 @@ export default class EventService {
         this.token = token;
         this._apiBase = 'http://localhost:8000/api';
     }
-    
-
 
     getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`,{
@@ -16,7 +14,6 @@ export default class EventService {
         if (!res.ok){
             throw new Error(`Could not fetch ${url}, status ${res.status}`);
         }
-        console.log(res);
         return await res.json();
     };
 

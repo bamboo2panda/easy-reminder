@@ -4,7 +4,6 @@ export default class AuthService extends Component {
     _apiBase = `http://localhost:8000/api/user/token/`;
 
     authenticateUser = async (data) => {
-        console.log(data);
         const res = await fetch(
             `${this._apiBase}`,{
                 method: 'POST',

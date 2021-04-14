@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import AuthService from '../../services/authService';
+import SignIn from '../../pages/signIn';
 
 const Auth = (props) => {
-    const {token} = props;
     const [userEmail, updateUserEmail] = useState(null);
     const [userPass, updateUserPass] = useState(null);
 
-    console.log(props);
+    const token = localStorage.getItem('token');
+
     if (token){
         return props.children;
     }
@@ -15,15 +16,15 @@ const Auth = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(userEmail + userPass);
         authService.authenticateUser({
             email: userEmail,
             password: userPass
         })
         .then((result) => {
-            console.log(result.token);
             if (result.token){
-                props.updateToken(result.token);
+                props.setToken(result.token);
+                updateUserEmail(null);
+                updateUserPass(null);
             }
         });
         
@@ -34,17 +35,14 @@ const Auth = (props) => {
     const handleChangePass = (event) => {
         updateUserPass(event.target.value);
     }
-    
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <input type='text' value={userEmail} onChange={handleChangeEmail}/>
-            <br/>
-            <input type='password' value={userPass} onChange={handleChangePass}/>
-            <br/>
-            <input type='submit' value='CHECK'/>
-        </form>
-    )
+    return <SignIn 
+                handleChangeEmail={handleChangeEmail}
+                handleChangePass={handleChangePass}
+                userEmail={userEmail}
+                userPass={userPass}
+                handleSubmit={handleSubmit}
+            />
 }
 
 export default Auth;
