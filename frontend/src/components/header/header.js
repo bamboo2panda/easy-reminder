@@ -7,6 +7,7 @@ const Header = ({setToken}) => {
             <h1>Header</h1>
             <SignOut setToken={setToken}/>
         </div>
+                
     );
 }
 
