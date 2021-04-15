@@ -20,15 +20,17 @@ const App = () => {
   return (
     <Router>
         <Switch>
+          <div className="main">
             <Route exact path="/">
-            <Auth setToken={setToken}>
-              <Header setToken={setToken}/>
-              <EventList/>
-            </Auth> 
+              <Auth setToken={setToken}>
+                <Header setToken={setToken}/>
+                <EventList/>
+              </Auth> 
             </Route>
             <Route path="/register">
                 <Register />
             </Route>
+          </div>
         </Switch>
     </Router>
     

@@ -34,7 +34,6 @@ const SignIn = ({
                 </div>
                 
             </form>
-            
         </main>
     );
 }
