@@ -5,7 +5,6 @@ export default class RegisterService {
         if (!data.email || !data.password || !data.name || !data.time_zone){
             throw new Error('No data');
         }
-        console.log(data);
         const res = await fetch(`${this._apiBase}`,{
             method: 'POST',
             crossDomain: true,

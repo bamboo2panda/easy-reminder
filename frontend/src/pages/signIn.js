@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import './signIn.css';
 
@@ -23,8 +24,17 @@ const SignIn = ({
                     <label for="floatingPassword">Password</label>
                 </div>
 
-                <button type='submit' value='CHECK' className="btn btn-success">Sing in</button>
+                <div class="row row-cols-2">
+                    <div class="col">
+                        <button type='submit' value='CHECK' className="btn btn-success">Sing in</button>
+                    </div>
+                    <div class="col">
+                        <Link class="btn btn-primary" to="/register">Register</Link>
+                    </div>
+                </div>
+                
             </form>
+            
         </main>
     );
 }

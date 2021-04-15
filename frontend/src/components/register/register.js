@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import RegisterService from '../../services/registerService';
+import {useHistory} from 'react-router-dom';
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [time_zone, setTimezone] = useState("");
+    const history = useHistory();
 
     const handleChangeEmail = (event) => {
         setEmail(event.target.value);
@@ -26,7 +28,13 @@ const Register = () => {
     const handleRegister = (event) => {
         event.preventDefault();
         const registerService = new RegisterService();
-        registerService.registerUser({email, password, name, time_zone});
+        registerService.registerUser({email, password, name, time_zone})
+        .then(() => {
+                history.push("/");
+            })
+        .catch(() => {
+                throw new Error("Registration fail.");
+            });
     }
 
     return (
