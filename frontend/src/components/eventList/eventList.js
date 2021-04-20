@@ -3,9 +3,8 @@ import EventService from '../../services/eventService';
 
 function EventList (){
     const [eventList, updateEventList] = useState([]);
-    const token = localStorage.getItem('token');
     
-    let eventService = new EventService(token);
+    let eventService = new EventService();
     
     eventService.getEventsList()
         .then((result) => {
@@ -20,6 +19,7 @@ function EventList (){
             <div class="card">
                 <div class="card-body">
                     <h3>{name}</h3>
+                    <strong>{date_time}</strong>
                 </div>
             </div>
             );

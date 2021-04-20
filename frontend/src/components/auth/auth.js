@@ -3,8 +3,8 @@ import AuthService from '../../services/authService';
 import SignIn from '../../pages/signIn';
 
 const Auth = (props) => {
-    const [userEmail, updateUserEmail] = useState(null);
-    const [userPass, updateUserPass] = useState(null);
+    const [userEmail, updateUserEmail] = useState("");
+    const [userPass, updateUserPass] = useState("");
 
     const token = localStorage.getItem('token');
 

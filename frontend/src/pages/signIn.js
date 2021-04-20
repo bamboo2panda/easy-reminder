@@ -11,25 +11,25 @@ const SignIn = ({
                 userEmail
             }) => {
     return(
-        <main class="form-signin">
+        <main className="form-signin">
             <form onSubmit={handleSubmit}>
-                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
                 <div className="form-floating">
                     <input type="email" className="form-control" id="floatingInput" onChange={handleChangeEmail} value={userEmail} placeholder="name@example.com"/>
-                    <label for="floatingInput">Email address</label>
+                    <label htmlFor="floatingInput">Email address</label>
                 </div>
-                <div class="form-floating">
+                <div className="form-floating">
                     <input type="password" className="form-control" id="floatingPassword"  value={userPass} onChange={handleChangePass} placeholder="Password"/>
-                    <label for="floatingPassword">Password</label>
+                    <label htmlFor="floatingPassword">Password</label>
                 </div>
 
-                <div class="row row-cols-2">
-                    <div class="col">
+                <div className="row row-cols-2">
+                    <div className="col">
                         <button type='submit' value='CHECK' className="btn btn-success">Sing in</button>
                     </div>
-                    <div class="col">
-                        <Link class="btn btn-primary" to="/register">Register</Link>
+                    <div className="col">
+                        <Link className="btn btn-primary" to="/register">Register</Link>
                     </div>
                 </div>
                 

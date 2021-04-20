@@ -1,6 +1,6 @@
 export default class EventService {
-    constructor(token){
-        this.token = token;
+    constructor(){
+        this.token = localStorage.getItem("token");
         this._apiBase = 'http://localhost:8000/api';
     }
 
@@ -17,10 +17,34 @@ export default class EventService {
         return await res.json();
     };
 
-    getEventsList = async (token) => {
+    getEventsList = async () => {
         const res = await this.getResource(`/event/events/`);
         return res.map(this._transformEvent);
     };
+
+    addEvent = async (data) => {
+        console.log(this.token);
+        console.log(data);
+        if (!data.name || !data.date_time){
+            throw new Error('No data');
+        }
+        const url = `/event/events/`;
+        const res = await fetch(`${this._apiBase}${url}`,{
+            method: "POST",
+            crossDomain: true,
+            headers:{
+                'accept': 'application/json, plain/text, */*',
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${this.token}`
+            },
+            body: JSON.stringify(data)
+        });
+        if (!res.ok){
+            console.log(res);
+            throw new Error("Bad new event request.");
+        }
+        return await res.json();
+    }
 
     _transformEvent(event){
         return {
