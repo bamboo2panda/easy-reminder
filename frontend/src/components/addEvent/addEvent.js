@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import AddEventModal from '../../pages/addEventModal';
 import EventService from '../../services/eventService';
 import { Button } from 'react-bootstrap';
+import moment from 'moment';
 
 const AddEvent = (props) => {
     const [name, setName] = useState("");
@@ -13,9 +14,10 @@ const AddEvent = (props) => {
         setName(event.target.value);
     }
 
-    const handleChangeDateTime = (event) => {
-        event.preventDefault();
-        setDateTime(event.target.value);
+    const handleChangeDateTime = (value) => {
+        setDateTime(value._d);
+        console.log(value._d);
+        console.log(dateTime);
     }
 
     const handleAddEventSubmit = (event) => {

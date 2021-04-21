@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Modal, Button, InputGroup, FormControl} from 'react-bootstrap';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import DatePicker from 'react-datepicker';
+import { DatePicker as DP } from 'antd';
+import 'antd/dist/antd.css';
 
 export default class AddEventModal extends Component{
     setIsOpen = (data) => {
@@ -37,7 +36,7 @@ export default class AddEventModal extends Component{
                             onChange={this.props.handleChangeName}
                             />
                         </InputGroup>
-                        <InputGroup className="mb-3">
+                        {/* <InputGroup className="mb-3">
                             <InputGroup.Prepend>
                                 <InputGroup.Text id="date-time">
                                     <FontAwesomeIcon icon={faCalendarAlt}/>
@@ -51,7 +50,8 @@ export default class AddEventModal extends Component{
                             aria-describedby="date-time"
                             onChange={this.props.handleChangeDateTime}
                             />
-                        </InputGroup>
+                        </InputGroup> */}
+                        <DP showTime onOk={this.props.handleChangeDateTime}/>
                         <Button type="submit" variant="primary">Save event</Button>
                     </form>
                     </Modal.Body>

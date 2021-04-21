@@ -1,6 +1,6 @@
 # First stage
 # Build react app
-FROM node:15.12.0-alpine as build
+FROM node:15.14.0-alpine as build
 
 WORKDIR /frontend
 COPY ./frontend/package.json ./
