@@ -9,3 +9,7 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = ('id', 'name', 'date_time',)
         read_only_fields = ('id',)
+
+class EventDetailSerializer(EventSerializer):
+    """Serialize event details"""
+    pass

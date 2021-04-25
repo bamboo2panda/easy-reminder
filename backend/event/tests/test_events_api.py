@@ -102,3 +102,20 @@ class PrivateApiTest(TestCase):
 
         self.assertEqual(res_name.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(res_date.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_delete_event(self):
+        """Test deleting event"""
+        Event.objects.create(user=self.user,
+                             name='Birthday',
+                             date_time=datetime.now()
+                             .astimezone(self.user.time_zone))
+        Event.objects.create(user=self.user,
+                             name='Next event',
+                             date_time=datetime.now()
+                             .astimezone(self.user.time_zone))
+        
+        payload = {'id': '1'}
+        res = self.client.delete(EVENTS_URL, payload);
+        get_events = self.client.get(EVENTS_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len.get_events.data, 1)

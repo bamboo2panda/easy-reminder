@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import {Modal, Button, InputGroup, FormControl} from 'react-bootstrap';
 import { DatePicker as DP } from 'antd';
+import moment from 'moment-timezone';
 import 'antd/dist/antd.css';
+
+moment.tz.setDefault("America/New_York");
+console.log(moment);
 
 export default class AddEventModal extends Component{
     setIsOpen = (data) => {
@@ -51,7 +55,7 @@ export default class AddEventModal extends Component{
                             onChange={this.props.handleChangeDateTime}
                             />
                         </InputGroup> */}
-                        <DP showTime onOk={this.props.handleChangeDateTime}/>
+                        <DP showTime onChange={this.props.handleChangeDateTime}/>
                         <Button type="submit" variant="primary">Save event</Button>
                     </form>
                     </Modal.Body>

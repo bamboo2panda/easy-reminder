@@ -2,7 +2,10 @@ import React, {useState} from 'react';
 import AddEventModal from '../../pages/addEventModal';
 import EventService from '../../services/eventService';
 import { Button } from 'react-bootstrap';
-import moment from 'moment';
+import moment from 'moment-timezone';
+
+moment.tz.setDefault("America/New_York");
+console.log(moment);
 
 const AddEvent = (props) => {
     const [name, setName] = useState("");

@@ -1,7 +1,14 @@
 import React, {useState} from 'react';
 import EventService from '../../services/eventService';
+import { Card, Button } from 'react-bootstrap';
+import moment from 'moment-timezone';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function EventList (){
+moment.tz.setDefault("America/New_York");
+console.log(moment);
+
+function EventList (props){
     const [eventList, updateEventList] = useState([]);
     
     let eventService = new EventService();
@@ -12,16 +19,27 @@ function EventList (){
                 updateEventList(result);
             }
         });
+    
+    const deleteEvent = (id) => {
+        console.log(id);
+        eventService.deleteEvent(id)
+        .then((result) => {
+                props.updateScreen()
+        })
+        .catch((result) => {console.log(result)});
+    }
   
     return(
-        eventList.map(({name, date_time}) => {
+        console.log(eventList),
+        eventList.map(({id, name, date_time}) => {
         return(
-            <div class="card">
-                <div class="card-body">
+            <Card>
+                <Card.Body>
                     <h3>{name}</h3>
                     <strong>{date_time}</strong>
-                </div>
-            </div>
+                    <Button onClick={() => deleteEvent(id)}><FontAwesomeIcon icon={faTimes}/></Button>
+                </Card.Body>
+            </Card>
             );
         })
     );

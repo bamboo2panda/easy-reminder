@@ -46,8 +46,32 @@ export default class EventService {
         return await res.json();
     }
 
+    deleteEvent = async (id) => {
+        if (!id) {
+            throw new Error("No event selected.");
+        }
+        const url = '/event/events/';
+        const res = await fetch(`${this._apiBase}${url}`,{
+            method: "DELETE",
+            crossDomain: true,
+            headers: {
+                'accept': 'application/json, plain/text, */*',
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${this.token}`
+            },
+            body: JSON.stringify(id)
+        });
+        if(!res.ok){
+            console.log(res);
+            throw new Error('Bad deletion try.');
+        }
+        return await res.json();
+    }
+
+
     _transformEvent(event){
         return {
+            id: event.id,
             name: event.name,
             date_time: event.date_time,
         };

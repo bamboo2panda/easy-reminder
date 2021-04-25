@@ -27,7 +27,7 @@ const App = () => {
             <Route exact path="/">
               <Auth setToken={setToken}>
                 <Header setToken={setToken}/>
-                <EventList/>
+                <EventList  updateScreen={updateScreen}/>
                 <AddEvent updateScreen={updateScreen}/>
               </Auth> 
             </Route>
