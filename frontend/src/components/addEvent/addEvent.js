@@ -17,10 +17,9 @@ const AddEvent = (props) => {
         setName(event.target.value);
     }
 
-    const handleChangeDateTime = (value) => {
-        setDateTime(value._d);
-        console.log(value._d);
-        console.log(dateTime);
+    const handleChangeDateTime = (date, dateString) => {
+        setDateTime(dateString);
+        console.log(dateString);
     }
 
     const handleAddEventSubmit = (event) => {
@@ -28,7 +27,6 @@ const AddEvent = (props) => {
         const eventService = new EventService();
         eventService.addEvent({name, date_time: dateTime})
         .then((e) => {
-            // event.target.closest(".modal").close();
             console.log("SUCCESS");
             console.log(e);
             setModalIsOpen(false);

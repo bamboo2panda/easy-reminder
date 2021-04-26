@@ -23,7 +23,7 @@ function EventList (props){
     const deleteEvent = (id) => {
         console.log(id);
         eventService.deleteEvent(id)
-        .then((result) => {
+        .then(() => {
                 props.updateScreen()
         })
         .catch((result) => {console.log(result)});

@@ -40,22 +40,8 @@ export default class AddEventModal extends Component{
                             onChange={this.props.handleChangeName}
                             />
                         </InputGroup>
-                        {/* <InputGroup className="mb-3">
-                            <InputGroup.Prepend>
-                                <InputGroup.Text id="date-time">
-                                    <FontAwesomeIcon icon={faCalendarAlt}/>
-                                </InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                            name="date-time"
-                            id="date-time"
-                            placeholder="2021-02-01 15:00:00"
-                            aria-label="Date and time"
-                            aria-describedby="date-time"
-                            onChange={this.props.handleChangeDateTime}
-                            />
-                        </InputGroup> */}
-                        <DP showTime onChange={this.props.handleChangeDateTime}/>
+                        
+                        <DP showTime onChange={(date, dateString) => this.props.handleChangeDateTime(date, dateString)}/>
                         <Button type="submit" variant="primary">Save event</Button>
                     </form>
                     </Modal.Body>

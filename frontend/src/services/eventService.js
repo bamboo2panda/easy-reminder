@@ -51,21 +51,20 @@ export default class EventService {
             throw new Error("No event selected.");
         }
         const url = '/event/events/';
-        const res = await fetch(`${this._apiBase}${url}`,{
+        const res = await fetch(`${this._apiBase}${url}${id}/`,{
             method: "DELETE",
             crossDomain: true,
             headers: {
                 'accept': 'application/json, plain/text, */*',
                 'Content-Type': 'application/json',
                 'Authorization': `Token ${this.token}`
-            },
-            body: JSON.stringify(id)
+            }
         });
         if(!res.ok){
             console.log(res);
             throw new Error('Bad deletion try.');
         }
-        return await res.json();
+        return await res;
     }
 
 
