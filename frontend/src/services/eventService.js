@@ -46,6 +46,25 @@ export default class EventService {
         return await res.json();
     }
 
+    updateEvent = async (id, data) => {
+        const url = `/event/events/`;
+        const res = await fetch(`${this._apiBase}${url}${id}/`,{
+            method: "PATCH",
+            crossDomain: true,
+            headers:{
+                'accept': 'application/json, plain/text, */*',
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${this.token}`
+            },
+            body: JSON.stringify(data)
+        });
+        if (!res.ok){
+            console.log(res);
+            throw new Error("Bad update event request.");
+        }
+        return await res.json();
+    }
+
     deleteEvent = async (id) => {
         if (!id) {
             throw new Error("No event selected.");

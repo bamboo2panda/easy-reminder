@@ -19,7 +19,6 @@ const AddEvent = (props) => {
 
     const handleChangeDateTime = (date, dateString) => {
         setDateTime(dateString);
-        console.log(dateString);
     }
 
     const handleAddEventSubmit = (event) => {
@@ -27,13 +26,10 @@ const AddEvent = (props) => {
         const eventService = new EventService();
         eventService.addEvent({name, date_time: dateTime})
         .then((e) => {
-            console.log("SUCCESS");
-            console.log(e);
             setModalIsOpen(false);
             props.updateScreen();
         })
         .catch((e) => {
-            console.log(e);
             throw new Error("Bad event addition.");
         });
     }
