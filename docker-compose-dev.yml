@@ -13,7 +13,7 @@ services:
       - ./docker/nginx/development:/etc/nginx/conf.d
     depends_on:
       - backend
-  backend:
+  backend: &backend
     restart: unless-stopped
     build:
       context: .
@@ -24,6 +24,7 @@ services:
       - 8000:8000
     depends_on: 
       - db
+      - redis
     command: >
       sh -c "python manage.py wait_for_db"
     env_file:
@@ -36,6 +37,22 @@ services:
       - ./backend/.env
     networks:
       - djangonetwork
+
+  redis:
+    image: redis:alpine
+    ports: 
+      - "6379:6379"
+    networks:
+      - djangonetwork
+  
+  celery_app:
+    <<: *backend
+    ports:
+      - 8001:8001
+    build:
+      context: .
+      dockerfile: ./docker/celery/Dockerfile
+    
 
 volumes:
   static_volume: {}

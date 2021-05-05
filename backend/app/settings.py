@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'user',
     'event',
     'corsheaders',
+    'celery',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +145,6 @@ CORS_ALLOW_METHODS = (
         'DELETE',
         'OPTIONS'
     )
+
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
