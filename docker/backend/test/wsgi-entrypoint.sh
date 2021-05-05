@@ -18,5 +18,6 @@ do
     sleep 2
 done
 
-./manage.py collectstatic --noinput
-DEBUG=True ./manage.py runserver 0.0.0.0:8000
+./manage.py test
+# ./manage.py collectstatic --noinput
+# DEBUG=True ./manage.py runserver 0.0.0.0:8000

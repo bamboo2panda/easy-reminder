@@ -2,7 +2,7 @@
 Reminder app based on React and Django
 
 
-Run tests:
+Run backend tests:
 ```
-docker-compose run app sh -c "python manage.py test && flake8"
+docker-compose -f docker-compose-test-backend.yml run --rm backend
 ```

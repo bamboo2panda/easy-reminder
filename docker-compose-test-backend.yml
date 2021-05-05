@@ -5,7 +5,9 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./docker/backend/Dockerfile-for-test
+      dockerfile: ./docker/backend/test/Dockerfile
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
       - static_volume:/backend/static
     ports:
