@@ -13,4 +13,4 @@ done
 
 ./manage.py collectstatic --noinput
 
-gunicorn app.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4
+gunicorn app.wsgi --bind ${WEB_HOST}:8000 --workers 4 --threads 4

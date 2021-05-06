@@ -1,7 +1,12 @@
+require('dotenv').config();
+console.log(require('dotenv'));
+const host = process.env.REACT_APP_WEB_HOST;
+console.log(`Host: ${host}`);
+const protocol = 'http://';
 export default class EventService {
     constructor(){
         this.token = localStorage.getItem("token");
-        this._apiBase = 'http://localhost:8000/api';
+        this._apiBase = `${protocol}${host}:8000/api`;
     }
 
     getResource = async (url) => {

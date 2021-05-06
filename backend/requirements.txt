@@ -8,3 +8,4 @@ flake8>=3.8.4,<3.9.0
 
 celery>=5.0.5,<5.1.0
 redis>=3.5.3,<3.6.0
+django-celery-beat>=2.2.0,<2.3.0

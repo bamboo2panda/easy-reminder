@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'event',
     'corsheaders',
     'celery',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,5 @@ CORS_ALLOW_METHODS = (
 
 CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'redis://redis:6379'
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

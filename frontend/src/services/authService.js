@@ -1,7 +1,11 @@
 import {Component} from 'react';
+require('dotenv').config()
+const host = process.env.REACT_APP_WEB_HOST;
+const protocol = 'http://';
 
 export default class AuthService extends Component {
-    _apiBase = `http://localhost:8000/api/user/token/`;
+    
+    _apiBase = `${protocol}${host}:8000/api/user/token/`;
 
     authenticateUser = async (data) => {
         const res = await fetch(

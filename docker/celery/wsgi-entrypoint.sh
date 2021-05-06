@@ -5,4 +5,4 @@ do
     echo "Wait for server volume..."
 done
 
-celery -A app worker -l INFO
+celery -A app worker -l INFO -B
