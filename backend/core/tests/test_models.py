@@ -9,7 +9,7 @@ from core import models
 def get_test_user(email='test@email.com',
                   password='testpassword',
                   name='Test Name',
-                  time_zone='Europe/Moscow'):
+                  time_zone='Zulu'):
     user = get_user_model().objects.create_user(
         email=email,
         password=password,

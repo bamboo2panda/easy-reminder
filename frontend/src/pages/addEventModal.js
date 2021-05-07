@@ -4,7 +4,8 @@ import { DatePicker as DP } from 'antd';
 import moment from 'moment-timezone';
 import 'antd/dist/antd.css';
 
-moment.tz.setDefault("America/New_York");
+// moment.tz.setDefault("Zulu");
+console.log('moment');
 console.log(moment);
 
 export default class AddEventModal extends Component{

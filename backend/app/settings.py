@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "your_project.settings")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -25,7 +27,7 @@ SECRET_KEY = 'l92+5$14(=4b^tu0n*xxb05umvl7i#@sdws7(@k#(5-)8&y&k3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+ALLOWED_HOSTS = [os.environ.get('WEB_HOST')]
 
 
 # Application definition
@@ -44,7 +46,8 @@ INSTALLED_APPS = [
     'event',
     'corsheaders',
     'celery',
-    'django_celery_beat'
+    'django_celery_beat',
+    'notificator'
 ]
 
 MIDDLEWARE = [
@@ -151,3 +154,10 @@ CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'redis://redis:6379'
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BEAT_SCHEDULE = {
+# Executes every Friday at 4pm
+    'send-notification-on-friday-afternoon': { 
+        'task': 'notificator.tasks.listEvents', 
+        'schedule': timedelta(seconds=60),
+    },          
+}

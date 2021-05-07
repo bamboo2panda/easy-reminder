@@ -33,7 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead of username"""
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
-    time_zone = TimeZoneField(default='Europe/London',
+    time_zone = TimeZoneField(default='Zulu',
                               choices_display='WITH_GMT_OFFSET')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

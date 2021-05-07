@@ -48,7 +48,7 @@ services:
   celery_app:
     <<: *backend
     ports:
-      - 8001:8001
+      - "5555:5555"
     build:
       context: .
       dockerfile: ./docker/celery/Dockerfile

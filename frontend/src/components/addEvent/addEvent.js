@@ -4,7 +4,7 @@ import EventService from '../../services/eventService';
 import { Button } from 'react-bootstrap';
 import moment from 'moment-timezone';
 
-moment.tz.setDefault("America/New_York");
+// moment.tz.setDefault("Zulu");
 console.log(moment);
 
 const AddEvent = (props) => {

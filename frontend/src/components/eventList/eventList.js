@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-moment.tz.setDefault("America/New_York");
+// moment.tz.setDefault("Zulu");
 console.log(moment);
 
 function EventList (props){
@@ -28,11 +28,7 @@ function EventList (props){
                     <Card.Text>
                     <h3>{name}</h3>
                     <strong>
-                        {new Intl.DateTimeFormat("ru-RU", {
-                            dateStyle: 'full', timeStyle: 'short'
-                        }).format(
-                            new Date(date_time)
-                        )}
+                        {moment(date_time).format('YYYY-MM-DD HH:mm')}
                     </strong>
                     </Card.Text>
                     <Button onClick={() => callEditEvent(data)}><FontAwesomeIcon icon={faPencilAlt}/></Button>&nbsp;
