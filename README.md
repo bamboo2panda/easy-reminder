@@ -1,5 +1,4 @@
 # easy-reminder
-Reminder app based on React and Django
 
 Reminder app based on Django, ReactJS and Celery.
 Users can create notifications and recieve them when on email time comes. 
