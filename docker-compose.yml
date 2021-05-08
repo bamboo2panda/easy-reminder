@@ -11,13 +11,15 @@ services:
     volumes: 
       - static_volume:/backend/static
       - ./docker/nginx/development:/etc/nginx/conf.d
+    env_file:
+      - ./backend/.env
     depends_on:
       - backend
   backend: &backend
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./docker/backend/Dockerfile
+      dockerfile: ./docker/backend/production/Dockerfile
     volumes:
       - static_volume:/backend/static
     ports:
@@ -44,16 +46,6 @@ services:
       - "6379:6379"
     networks:
       - djangonetwork
-  
-  celery_app:
-    <<: *backend
-    ports:
-      - "5555:5555"
-    build:
-      context: .
-      dockerfile: ./docker/celery/Dockerfile
-    
-
 volumes:
   static_volume: {}
 
