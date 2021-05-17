@@ -12,3 +12,6 @@ Users can create notifications and recieve them on email when time comes.
 ```
 docker-compose -f docker-compose-test-backend.yml run --rm backend
 ```
+
+## Try it yourself
+[http://do.2dpo.ru](http://do.2dpo.ru)
